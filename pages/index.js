@@ -133,7 +133,7 @@ export default function Home() {
 
   return (
     <div
-      className={`w-full h-screen App bg-cover flex flex-col justify-between ${bgImage.img} transition ease-in-out sm:h-fit`}
+      className={`w-full h-screen App bg-cover flex flex-col justify-between ${bgImage.img} transition ease-in-out sm:h-fit sm:min-h-screen`}
     >
       <Head>
         <title>Weather App</title>
