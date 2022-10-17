@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 
 import InnerGrid from "../components/InnerGrid";
 
@@ -127,6 +128,9 @@ export default function Home() {
     <div
       className={`w-full h-screen App bg-cover flex flex-col justify-between ${bgImage.img} transition ease-in-out`}
     >
+      <Head>
+        <title>Weather App</title>
+      </Head>
       <div className="flex flex-col items-center justify-evenly h-[96%]">
         <header className="flex flex-col items-center justify-around w-full h-1/5">
           <h1 className="text-5xl font-bold">Weather App</h1>
