@@ -8,7 +8,14 @@ export default function Home() {
   const [weatherData, setWeatherData] = useState({});
   const [latLong, setLatLong] = useState({});
   const [location, setLocation] = useState("");
-  const [bgImage, setBgImage] = useState({ img: "bg-cyan-200" });
+  const [bgImage, setBgImage] = useState({
+    img: 'bg-[url("../images/clear.jpg")]',
+    component: (
+      <a href="https://www.freepik.com/free-photo/cloud-blue-sky_1017702.htm#query=weather%20background&position=0&from_view=keyword">
+        Image by jannoon028 on Freepik
+      </a>
+    ),
+  });
   const [favouriteCountry, setFavouriteCountry] = useState([]);
 
   async function getLatLong(location) {
