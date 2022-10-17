@@ -133,15 +133,18 @@ export default function Home() {
 
   return (
     <div
-      className={`w-full h-screen App bg-cover flex flex-col justify-between ${bgImage.img} transition ease-in-out`}
+      className={`w-full h-screen App bg-cover flex flex-col justify-between ${bgImage.img} transition ease-in-out sm:h-fit`}
     >
       <Head>
         <title>Weather App</title>
       </Head>
       <div className="flex flex-col items-center justify-evenly h-[96%]">
         <header className="flex flex-col items-center justify-around w-full h-1/5">
-          <h1 className="text-5xl font-bold">Weather App</h1>
-          <form onSubmit={handleSearch} className="flex justify-center w-1/3">
+          <h1 className="text-5xl font-bold sm:py-5">Weather App</h1>
+          <form
+            onSubmit={handleSearch}
+            className="flex justify-center w-1/3 sm:my-5 sm:w-4/5"
+          >
             <label className="w-full mr-2">
               <input
                 className="w-full pl-5 border rounded h-14"
@@ -159,25 +162,25 @@ export default function Home() {
         </header>
 
         {weatherData.country && (
-          <main className="flex flex-row w-[70%] h-3/6 justify-between font-Dosis lg:flex-col lg:w-full lg:items-center lg:h-4/6 lg:justify-evenly">
-            <div className="w-[35%] border rounded flex flex-col items-center justify-evenly bg-slate-50 lg:w-2/5 lg:py-5">
-              <h1 className="font-extrabold text-8xl">
+          <main className="flex flex-row w-[70%] h-3/6 justify-between font-Dosis lg:flex-col lg:w-full lg:items-center lg:h-4/6 lg:justify-evenly sm:w-full">
+            <div className="w-[35%] border rounded flex flex-col items-center justify-evenly bg-slate-50 lg:w-2/5 lg:py-5 sm:w-4/5 sm:mb-3">
+              <h1 className="font-extrabold text-8xl sm:text-7xl">
                 {weatherData.normalTemp?.toFixed(0)}°
               </h1>
               <p className="text-3xl">{weatherData.weather}</p>
-              <h2 className="text-4xl font-semibold text-blue-700">
+              <h2 className="text-4xl font-semibold text-blue-700 sm:text-3xl">
                 {latLong.name}, {weatherData.country}
               </h2>
               {!isFavourite && checkLocation ? (
                 <button
                   onClick={() => addToFavourite()}
-                  className="w-1/3 py-1 text-white transition ease-in-out bg-teal-500 rounded hover:bg-teal-600"
+                  className="w-1/3 py-1 text-white transition ease-in-out bg-teal-500 rounded hover:bg-teal-600 sm:w-1/2 sm:mt-5 lg:mt-5"
                 >
                   Save to favourite
                 </button>
               ) : (
                 <button
-                  className="w-1/3 py-1 text-white transition ease-in-out bg-red-600 rounded hover:bg-red-500"
+                  className="w-1/3 py-1 text-white transition ease-in-out bg-red-600 rounded hover:bg-red-500 sm:w-1/2 sm:mt-5 lg:mt-5"
                   onClick={() => deleteFromFavourite()}
                 >
                   Delete from favourite
@@ -185,7 +188,7 @@ export default function Home() {
               )}
             </div>
 
-            <div className="grid w-3/5 grid-cols-2 gap-4 p-10 border rounded grid-row-4 bg-slate-50 font-Dosis">
+            <div className="grid w-3/5 grid-cols-2 gap-4 p-10 border rounded sm:grid-cols-1 grid-row-4 bg-slate-50 font-Dosis sm:p-1 sm:w-4/5 sm:py-5">
               <InnerGrid
                 title="High/Low"
                 content={weatherData.highTemp?.toFixed(0)}
@@ -214,17 +217,17 @@ export default function Home() {
           </main>
         )}
 
-        <div className="flex justify-center w-[85%] h-content">
+        <div className="flex justify-center w-[85%] h-content sm:mt-4 sm:w-full">
           <div className="flex items-center justify-center w-4/5 py-5 rounded bg-slate-50/50">
-            <div className="flex flex-wrap justify-center w-full px-10 text-lg font-semibold">
-              My Favourite locations :
+            <div className="flex flex-wrap justify-center w-full px-10 text-lg font-semibold sm:px-5">
+              <span className="sm:mb-3">My Favourite locations :</span>
               {!favouriteCountry.length ? (
                 <p className="ml-3">None</p>
               ) : (
                 favouriteCountry.map((country, index) => {
                   return (
                     <button
-                      className="px-5 mb-5 ml-5 transition ease-in-out bg-indigo-300 border hover:-translate-y-1 hover:scale-105 rounded-xl hover:text-white hover:bg-indigo-600"
+                      className="px-5 mb-5 ml-5 transition ease-in-out bg-indigo-300 border sm:mb-0 hover:-translate-y-1 hover:scale-105 rounded-xl hover:text-white hover:bg-indigo-600 sm:px-3"
                       key={index}
                       onClick={() => putToSearch(country)}
                     >
