@@ -104,7 +104,7 @@ export default function Home() {
 
   useEffect(() => {
     const favourite = localStorage.getItem("favourite");
-    const temp = favourite.split(",");
+    const temp = favourite?.split(",");
     if (favourite) setFavouriteCountry(temp);
   }, []);
 
@@ -208,11 +208,11 @@ export default function Home() {
         )}
 
         <div className="flex justify-center w-[85%] h-content">
-          <div className="flex items-center justify-center w-4/5 pt-5 rounded bg-slate-50/50">
+          <div className="flex items-center justify-center w-4/5 py-5 rounded bg-slate-50/50">
             <div className="flex flex-wrap justify-center w-full px-10 text-lg font-semibold">
               My Favourite locations :
               {!favouriteCountry.length ? (
-                <p className="ml-5">None</p>
+                <p className="ml-3">None</p>
               ) : (
                 favouriteCountry.map((country, index) => {
                   return (
