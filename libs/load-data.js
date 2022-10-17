@@ -1,4 +1,5 @@
 import getNormalTime from "../utils/getNormalTime";
+import axios from "axios";
 
 const API_KEY = "46e3e4b01cc9de1bce497046db0a8826";
 
@@ -16,8 +17,7 @@ async function getLatLong(location) {
   }
 }
 
-async function getWeatherData() {
-  const { lat, lon } = latLong;
+async function getWeatherData(lat, lon) {
   const result = await axios.get(
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
   );
@@ -73,6 +73,7 @@ function changeBackgroundImg(weatherData) {
       </a>
     );
   }
+  return bgImage;
 }
 
 export { getLatLong, getWeatherData, changeBackgroundImg };
