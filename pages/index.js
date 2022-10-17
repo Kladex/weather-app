@@ -41,7 +41,7 @@ export default function Home() {
   function addToFavourite() {
     let favourite = [...favouriteCountry];
 
-    if (!isFavourite && favourite.length && !checkLocation <= 13) {
+    if (!isFavourite && favourite.length <= 13 && checkLocation) {
       favourite = [...favourite, checkLocation];
       setFavouriteCountry(favourite);
       localStorage.setItem("favourite", favourite);
