@@ -1,12 +1,10 @@
 import getNormalTime from "../utils/getNormalTime";
 import axios from "axios";
 
-const API_KEY = "46e3e4b01cc9de1bce497046db0a8826";
-
 async function getLatLong(location) {
   if (location.trim()) {
     const result = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=${1}&appid=${API_KEY}`
+      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=${1}&appid=${process.env.API_KEY.toString()}`
     );
     const data = {
       name: result.data[0].name,
@@ -19,7 +17,7 @@ async function getLatLong(location) {
 
 async function getWeatherData(lat, lon) {
   const result = await axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${process.env.API_KEY.toString()}`
   );
   const data = result.data;
   const combineData = {
@@ -39,41 +37,4 @@ async function getWeatherData(lat, lon) {
   return combineData;
 }
 
-function changeBackgroundImg(weatherData) {
-  const weather = weatherData.weather;
-  let bgImage = { img: "bg-orange-100" };
-  if (weather === "Clouds") {
-    bgImage.img = 'bg-[url("../images/cloud.jpg")]';
-  } else if (weather === "Rain") {
-    bgImage.img = 'bg-[url("../images/rain.jpg")]';
-    bgImage.component = (
-      <a href="https://www.freepik.com/free-vector/dark-clouds-with-rainfall-thunder-flash-background_15244408.htm#query=weather%20background&position=10&from_view=keyword">
-        Image by starline on Freepik
-      </a>
-    );
-  } else if (weather === "Thunderstorm") {
-    bgImage.img = 'bg-[url("../images/heavyRain.jpg")]';
-    bgImage.component = (
-      <a href="https://www.freepik.com/free-vector/thunderstorm-night-urban-scene_4228067.htm#query=heavy%20rain&position=26&from_view=search&track=sph">
-        Image by brgfx on Freepik
-      </a>
-    );
-  } else if (weather === "Clear") {
-    bgImage.img = 'bg-[url("../images/clear.jpg")]';
-    bgImage.component = (
-      <a href="https://www.freepik.com/free-photo/cloud-blue-sky_1017702.htm#query=weather%20background&position=0&from_view=keyword">
-        Image by jannoon028 on Freepik
-      </a>
-    );
-  } else if (weather === "Snow") {
-    bgImage.img = 'bg-[url("../images/snow.jpg")]';
-    bgImage.component = (
-      <a href="https://www.freepik.com/free-photo/beautiful-shot-mountains-trees-covered-snow-fog_10584363.htm#query=snow%20weather&position=37&from_view=search&track=sph">
-        Image by wirestock on Freepik
-      </a>
-    );
-  }
-  return bgImage;
-}
-
-export { getLatLong, getWeatherData, changeBackgroundImg };
+export { getLatLong, getWeatherData };
