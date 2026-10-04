@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: weather-app-kladex-test
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start -- --hostname 0.0.0.0
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 20.19.6
+      - key: API_KEY
+        sync: false
