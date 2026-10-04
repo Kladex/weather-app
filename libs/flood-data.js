@@ -136,8 +136,20 @@ export function normalizeRoads(data, now = Date.now()) {
 
 export async function getRoads() {
   return cached("roads", async () => {
-    const response = await axios.get(`${ROAD_SOURCE}PageMap/GetData?id=0`, { timeout: 12000 });
-    return { stations: normalizeRoads(response.data), fetchedAt: new Date().toISOString(), source: ROAD_SOURCE };
+    try {
+      const response = await axios.get(`${ROAD_SOURCE}PageMap/GetData?id=0`, { timeout: 12000 });
+      return { stations: normalizeRoads(response.data), fetchedAt: new Date().toISOString(), source: ROAD_SOURCE };
+    } catch (error) {
+      const url = process.env.BANGKOK_COLLECTOR_URL;
+      const token = process.env.BANGKOK_COLLECTOR_TOKEN;
+      if (!url || !token) throw error;
+      const target = new URL(url);
+      if (target.protocol !== "https:" || target.username || target.password) throw new Error("Invalid collector URL");
+      const response = await axios.get(target.href, { timeout: 15000, maxContentLength: 5 * 1024 * 1024, maxRedirects: 0, headers: { Authorization: `Bearer ${token}` } });
+      const age = Date.now() - Date.parse(response.data?.fetchedAt);
+      if (!Number.isFinite(age) || age > 5 * 60 * 1000 || age < -5 * 60 * 1000) throw new Error("Collector snapshot unavailable");
+      return { stations: normalizeRoads(response.data), fetchedAt: response.data.fetchedAt, source: ROAD_SOURCE };
+    }
   });
 }
 

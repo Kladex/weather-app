@@ -5,7 +5,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 const { transformSync } = require("next/dist/build/swc");
 
-function load(file, dependencies = {}) {
+function load(file, dependencies = {}, env = {}) {
   const source = fs.readFileSync(path.join(__dirname, "..", file), "utf8");
   const { code } = transformSync(source, {
     filename: file,
@@ -17,7 +17,7 @@ function load(file, dependencies = {}) {
     module, exports: module.exports,
     URL,
     require: (name) => dependencies[name],
-    process: { env: { API_KEY: "test-key" } },
+    process: { env: { API_KEY: "test-key", ...env } },
   });
   return module.exports;
 }
@@ -277,6 +277,64 @@ test("forecast API validates coordinates and reports upstream failures", async (
   }
   assert.equal((await call({ lat: "0", lon: "0" })).code, 502);
   assert.equal((await call({}, "POST")).code, 405);
+});
+
+test("collector fallback preserves observation timestamps and rejects old snapshots", async () => {
+  const now = Date.now();
+  const snapshot = { fetchedAt: new Date(now).toISOString(), dtTbl: [{ flood_code: "FL.TEST.01", flood: 20, site_timestamp: `/Date(${now})/`, status: 1, chkStatustxt: "น้ำท่วม" }] };
+  for (const stale of [false, true]) {
+    const calls = [];
+    const lib = load("libs/flood-data.js", { axios: { get: async (url, options) => {
+      calls.push({ url, options });
+      if (calls.length === 1) throw Object.assign(new Error("Forbidden"), { response: { status: 403 } });
+      return { data: { ...snapshot, fetchedAt: new Date(now - (stale ? 360000 : 0)).toISOString() } };
+    } } }, { BANGKOK_COLLECTOR_URL: "https://collector.example/roads", BANGKOK_COLLECTOR_TOKEN: "test-secret" });
+    if (stale) await assert.rejects(lib.getRoads(), /snapshot unavailable/);
+    else {
+      const roads = await lib.getRoads();
+      assert.equal(roads.stations[0].observedAt, new Date(now).toISOString());
+      assert.equal(roads.stations[0].flooded, true);
+      assert.equal(roads.fetchedAt, snapshot.fetchedAt);
+    }
+    assert.equal(calls[1].options.headers.Authorization, "Bearer test-secret");
+    assert.equal(calls[1].options.maxRedirects, 0);
+  }
+});
+
+test("collector requires authentication, shares concurrent fetches and returns safe failures", async () => {
+  const { createCollector } = require("../services/bangkok-collector.cjs");
+  const token = "test-token-32-characters-long-secret";
+  for (const failing of [false, true]) {
+    let calls = 0;
+    const server = createCollector({ token, fetchSource: async () => {
+      calls++;
+      await new Promise(resolve => setTimeout(resolve, 20));
+      if (failing) throw Object.assign(new Error("private details"), { response: { status: 403, data: "private response" } });
+      return { data: { dtTbl: [{ flood_code: "FL.TEST.01", site_timestamp: "/Date(0)/" }] } };
+    } });
+    await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
+    try {
+      const url = `http://127.0.0.1:${server.address().port}/roads`;
+      assert.equal((await fetch(url)).status, 401);
+      assert.equal(calls, 0);
+      const responses = await Promise.all([1, 2].map(() => fetch(url, { headers: { Authorization: `Bearer ${token}` } })));
+      const bodies = await Promise.all(responses.map(response => response.json()));
+      assert.equal(calls, 1);
+      if (failing) {
+        assert.equal(responses[0].status, 502);
+        assert.equal(bodies[0].upstreamStatus, 403);
+        assert.equal(JSON.stringify(bodies).includes("private"), false);
+      } else {
+        assert.equal(responses[0].status, 200);
+        assert.equal(bodies[0].dtTbl[0].site_timestamp, "/Date(0)/");
+        await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+        assert.equal(calls, 1);
+      }
+    } finally {
+      server.closeAllConnections();
+      await new Promise(resolve => server.close(resolve));
+    }
+  }
 });
 
 test("TMD radar remains available when Bangkok rejects the bulletin or changes its page", async () => {
