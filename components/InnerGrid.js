@@ -1,6 +1,7 @@
 import Icon from "./Icon";
 
 export default function InnerGrid({ title, content, content2, icon, unit, note }) {
+  if (content === null || content === undefined || content === "—" || content === "—°") return null;
   return (
     <div className="metric-card">
       <div className="metric-heading"><Icon name={icon} /><span>{title}</span></div>

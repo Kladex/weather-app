@@ -139,7 +139,7 @@ function page(post) {
     useEffect() {},
   };
   const Home = load("pages/index.js", {
-    react, axios: { post }, "next/head": () => {}, "next/link": () => {}, "../components/InnerGrid": () => {}, "../components/Icon": () => {}, "../components/FloodWatch": () => {},
+    react, "../utils/i18n": { makeTranslator: () => (value) => value }, axios: { post }, "next/head": () => {}, "next/link": () => {}, "../components/InnerGrid": () => {}, "../components/Icon": () => {}, "../components/FloodWatch": () => {},
   }).default;
   function render() { stateIndex = refIndex = 0; return Home(); }
   function find(node, type) {
@@ -292,4 +292,25 @@ test("Bangkok monitor preserves radar when road source fails", async () => {
   assert.equal(res.code, 200);
   assert.ok(res.body.roads.error);
   assert.equal(res.body.radar.imageUrl, "official-radar");
+});
+
+
+test("language dictionaries translate labels, dynamic units and keep unknown station names", () => {
+  const dict = JSON.parse(fs.readFileSync(path.join(__dirname, "../utils/translations.json"), "utf8"));
+  const { makeTranslator, formatWatchTime } = load("utils/i18n.js", { "./translations.json": dict });
+  assert.equal(makeTranslator("th")("Search"), "ค้นหา");
+  assert.equal(makeTranslator("en")("สถานการณ์น้ำ"), "Rainfall & water levels");
+  assert.equal(makeTranslator("en")("1.5 ซม."), "1.5 cm");
+  assert.equal(makeTranslator("en")("สะพานพระพุทธยอดฟ้า"), "สะพานพระพุทธยอดฟ้า");
+  assert.equal(formatWatchTime(null, "en"), "Unknown time");
+});
+
+test("forecast hides failed data rather than rendering an empty card", () => {
+  let index = 0;
+  const component = load("components/FloodWatch.js", {
+    axios: {}, "next/image": () => {}, "./Icon": () => {},
+    "../utils/i18n": { makeTranslator: () => (value) => value, formatWatchTime: () => "time" },
+    react: { useState: () => [index++ === 1 ? "failed" : null, () => {}], useEffect: () => {}, useCallback: (fn) => fn },
+  }).RainForecast;
+  assert.equal(component({ coordinates: null }), null);
 });

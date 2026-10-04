@@ -1,0 +1,962 @@
+{
+  "Skip to weather": {
+    "th": "ข้ามไปข้อมูลอากาศ",
+    "en": "Skip to weather"
+  },
+  "A window to the world": {
+    "th": "มองอากาศทั่วโลก",
+    "en": "A window to the world"
+  },
+  "EVERYDAY, EVERYWHERE": {
+    "th": "ทุกวัน ทุกที่",
+    "en": "EVERYDAY, EVERYWHERE"
+  },
+  "Your day, at a glance": {
+    "th": "รู้ทันอากาศวันนี้",
+    "en": "Your day, at a glance"
+  },
+  "A little weather insight. A better start to your day.": {
+    "th": "เช็กอากาศสักนิด เริ่มวันได้มั่นใจขึ้น",
+    "en": "A little weather insight. A better start to your day."
+  },
+  "Search a city or country": {
+    "th": "ค้นหาเมืองหรือประเทศ",
+    "en": "Search a city or country"
+  },
+  "Search weather": {
+    "th": "ค้นหาสภาพอากาศ",
+    "en": "Search weather"
+  },
+  "Search": {
+    "th": "ค้นหา",
+    "en": "Search"
+  },
+  "Try “Bangkok” or “Paris, FR” for a more specific result.": {
+    "th": "ลองค้นหา “Bangkok” หรือ “Paris, FR” เพื่อให้ผลแม่นยำขึ้น",
+    "en": "Try “Bangkok” or “Paris, FR” for a more specific result."
+  },
+  "Finding the latest weather for": {
+    "th": "กำลังโหลดสภาพอากาศล่าสุดสำหรับ",
+    "en": "Finding the latest weather for"
+  },
+  "Try again": {
+    "th": "ลองอีกครั้ง",
+    "en": "Try again"
+  },
+  "Rain & flood watch": {
+    "th": "ติดตามฝนและน้ำท่วม",
+    "en": "Rain & flood watch"
+  },
+  "Feels like": {
+    "th": "รู้สึกเหมือน",
+    "en": "Feels like"
+  },
+  "High": {
+    "th": "สูงสุด",
+    "en": "High"
+  },
+  "Low": {
+    "th": "ต่ำสุด",
+    "en": "Low"
+  },
+  "Refresh": {
+    "th": "อัปเดต",
+    "en": "Refresh"
+  },
+  "A little clarity": {
+    "th": "เช็กอากาศ",
+    "en": "A little clarity"
+  },
+  "for your day.": {
+    "th": "ก่อนเริ่มวัน",
+    "en": "for your day."
+  },
+  "From your neighbourhood to your next adventure.": {
+    "th": "จากย่านที่คุณอยู่ ถึงเมืองที่กำลังจะไป",
+    "en": "From your neighbourhood to your next adventure."
+  },
+  "Find out what the sky has in store.": {
+    "th": "ดูสภาพอากาศก่อนออกเดินทาง",
+    "en": "Find out what the sky has in store."
+  },
+  "Explore Bangkok": {
+    "th": "ดูอากาศกรุงเทพฯ",
+    "en": "Explore Bangkok"
+  },
+  "Or search for any city above": {
+    "th": "หรือค้นหาเมืองอื่นด้านบน",
+    "en": "Or search for any city above"
+  },
+  "The details": {
+    "th": "รายละเอียดอากาศ",
+    "en": "The details"
+  },
+  "Sunrise": {
+    "th": "พระอาทิตย์ขึ้น",
+    "en": "Sunrise"
+  },
+  "Sunset": {
+    "th": "พระอาทิตย์ตก",
+    "en": "Sunset"
+  },
+  "Times in": {
+    "th": "เวลาในเมือง",
+    "en": "Times in"
+  },
+  "Anywhere you're headed.": {
+    "th": "พร้อมสำหรับทุกจุดหมาย",
+    "en": "Anywhere you're headed."
+  },
+  "Search a place to see temperature, wind, humidity and more.": {
+    "th": "ค้นหาสถานที่เพื่อดูอุณหภูมิ ลม ความชื้น และข้อมูลอื่น ๆ",
+    "en": "Search a place to see temperature, wind, humidity and more."
+  },
+  "Saved places": {
+    "th": "สถานที่ที่บันทึก",
+    "en": "Saved places"
+  },
+  "Your places, closer.": {
+    "th": "เก็บเมืองที่สนใจไว้ใกล้มือ",
+    "en": "Your places, closer."
+  },
+  "Tap “Save place” after a search": {
+    "th": "กด “บันทึกสถานที่” หลังค้นหา",
+    "en": "Tap “Save place” after a search"
+  },
+  "to keep your favourites here.": {
+    "th": "เพื่อเก็บเมืองโปรดไว้ที่นี่",
+    "en": "to keep your favourites here."
+  },
+  "Saved on this device": {
+    "th": "บันทึกบนอุปกรณ์นี้",
+    "en": "Saved on this device"
+  },
+  "Saved on this device · up to 14 places": {
+    "th": "บันทึกบนอุปกรณ์นี้ · สูงสุด 14 สถานที่",
+    "en": "Saved on this device · up to 14 places"
+  },
+  "Around the world": {
+    "th": "รอบโลก",
+    "en": "Around the world"
+  },
+  "A new city. A different sky.": {
+    "th": "ต่างเมือง ต่างสภาพอากาศ",
+    "en": "A new city. A different sky."
+  },
+  "A change of weather.": {
+    "th": "อากาศเปลี่ยน",
+    "en": "A change of weather."
+  },
+  "A change of perspective.": {
+    "th": "มุมมองเปลี่ยน",
+    "en": "A change of perspective."
+  },
+  "Made for the everyday.": {
+    "th": "สำหรับทุกวันของคุณ",
+    "en": "Made for the everyday."
+  },
+  "Designed by Kladex.": {
+    "th": "ออกแบบโดย Kladex",
+    "en": "Designed by Kladex."
+  },
+  "Weather data by OpenWeather": {
+    "th": "ข้อมูลอากาศจาก OpenWeather",
+    "en": "Weather data by OpenWeather"
+  },
+  "CURRENT WEATHER": {
+    "th": "สภาพอากาศปัจจุบัน",
+    "en": "CURRENT WEATHER"
+  },
+  "A FRESH PERSPECTIVE": {
+    "th": "เริ่มต้นวันอย่างมั่นใจ",
+    "en": "A FRESH PERSPECTIVE"
+  },
+  "Save place": {
+    "th": "บันทึกสถานที่",
+    "en": "Save place"
+  },
+  "Saved": {
+    "th": "บันทึกแล้ว",
+    "en": "Saved"
+  },
+  "14 places saved": {
+    "th": "บันทึกครบ 14 สถานที่",
+    "en": "14 places saved"
+  },
+  "Remove from saved places": {
+    "th": "นำออกจากสถานที่ที่บันทึก",
+    "en": "Remove from saved places"
+  },
+  "Save this place": {
+    "th": "บันทึกสถานที่นี้",
+    "en": "Save this place"
+  },
+  "Wind speed": {
+    "th": "ความเร็วลม",
+    "en": "Wind speed"
+  },
+  "Humidity": {
+    "th": "ความชื้น",
+    "en": "Humidity"
+  },
+  "Visibility": {
+    "th": "ทัศนวิสัย",
+    "en": "Visibility"
+  },
+  "Pressure": {
+    "th": "ความกดอากาศ",
+    "en": "Pressure"
+  },
+  "Wind direction": {
+    "th": "ทิศทางลม",
+    "en": "Wind direction"
+  },
+  "Current high / low": {
+    "th": "สูงสุด / ต่ำสุดปัจจุบัน",
+    "en": "Current high / low"
+  },
+  "Sunrise and sunset": {
+    "th": "พระอาทิตย์ขึ้นและตก",
+    "en": "Sunrise and sunset"
+  },
+  "Weather details": {
+    "th": "รายละเอียดอากาศ",
+    "en": "Weather details"
+  },
+  "Places to explore": {
+    "th": "สถานที่น่าสนใจ",
+    "en": "Places to explore"
+  },
+  "Current conditions": {
+    "th": "สภาพอากาศปัจจุบัน",
+    "en": "Current conditions"
+  },
+  "Observed at": {
+    "th": "ตรวจวัดเวลา",
+    "en": "Observed at"
+  },
+  "local time": {
+    "th": "เวลาท้องถิ่น",
+    "en": "local time"
+  },
+  "Refresh weather": {
+    "th": "อัปเดตสภาพอากาศ",
+    "en": "Refresh weather"
+  },
+  "Please enter a city or country.": {
+    "th": "กรุณาระบุเมืองหรือประเทศ",
+    "en": "Please enter a city or country."
+  },
+  "Unable to load the weather. Please try again.": {
+    "th": "โหลดข้อมูลอากาศไม่ได้ กรุณาลองใหม่",
+    "en": "Unable to load the weather. Please try again."
+  },
+  "Your browser could not save this place. Please allow local storage and try again.": {
+    "th": "บันทึกสถานที่ไม่ได้ กรุณาอนุญาตพื้นที่จัดเก็บของเบราว์เซอร์",
+    "en": "Your browser could not save this place. Please allow local storage and try again."
+  },
+  "Saved places are unavailable in this browser. You can still search for weather.": {
+    "th": "โหลดสถานที่ที่บันทึกไม่ได้ แต่ยังค้นหาอากาศได้",
+    "en": "Saved places are unavailable in this browser. You can still search for weather."
+  },
+  "Location not found.": {
+    "th": "ไม่พบสถานที่",
+    "en": "Location not found."
+  },
+  "Clear": {
+    "th": "ท้องฟ้าแจ่มใส",
+    "en": "Clear"
+  },
+  "Clouds": {
+    "th": "มีเมฆ",
+    "en": "Clouds"
+  },
+  "Rain": {
+    "th": "ฝนตก",
+    "en": "Rain"
+  },
+  "Drizzle": {
+    "th": "ฝนปรอย",
+    "en": "Drizzle"
+  },
+  "Thunderstorm": {
+    "th": "พายุฝนฟ้าคะนอง",
+    "en": "Thunderstorm"
+  },
+  "Snow": {
+    "th": "หิมะตก",
+    "en": "Snow"
+  },
+  "Mist": {
+    "th": "หมอกบาง",
+    "en": "Mist"
+  },
+  "Haze": {
+    "th": "หมอกควัน",
+    "en": "Haze"
+  },
+  "Fog": {
+    "th": "หมอก",
+    "en": "Fog"
+  },
+  "Thailand": {
+    "th": "ไทย",
+    "en": "Thailand"
+  },
+  "United Kingdom": {
+    "th": "สหราชอาณาจักร",
+    "en": "United Kingdom"
+  },
+  "Japan": {
+    "th": "ญี่ปุ่น",
+    "en": "Japan"
+  },
+  "United States": {
+    "th": "สหรัฐอเมริกา",
+    "en": "United States"
+  },
+  "คาดการณ์": {
+    "th": "คาดการณ์",
+    "en": "Forecast"
+  },
+  "ฝนล่วงหน้า ·": {
+    "th": "ฝนล่วงหน้า ·",
+    "en": "Rain forecast ·"
+  },
+  "ชม.": {
+    "th": "ชม.",
+    "en": "h"
+  },
+  "กำลังโหลดพยากรณ์ฝน…": {
+    "th": "กำลังโหลดพยากรณ์ฝน…",
+    "en": "Loading rainfall forecast…"
+  },
+  "ฝนสะสมคาดการณ์": {
+    "th": "ฝนสะสมคาดการณ์",
+    "en": "Forecast rainfall total"
+  },
+  "มม.": {
+    "th": "มม.",
+    "en": "mm"
+  },
+  "โอกาสฝนสูงสุด": {
+    "th": "โอกาสฝนสูงสุด",
+    "en": "Highest rain probability"
+  },
+  "ช่วงฝนมากที่สุด": {
+    "th": "ช่วงฝนมากที่สุด",
+    "en": "Peak rainfall"
+  },
+  "พยากรณ์บางชั่วโมงขาดหาย ค่าสูงสุดอ้างอิงเฉพาะชั่วโมงที่มีข้อมูล": {
+    "th": "พยากรณ์บางชั่วโมงขาดหาย ค่าสูงสุดอ้างอิงเฉพาะชั่วโมงที่มีข้อมูล",
+    "en": "Some hourly data is missing. Peak values use available readings."
+  },
+  "ดูข้อมูลรายชั่วโมงและวันที่": {
+    "th": "ดูข้อมูลรายชั่วโมงและวันที่",
+    "en": "View hourly data and dates"
+  },
+  "พยากรณ์ฝน ·": {
+    "th": "พยากรณ์ฝน ·",
+    "en": "Rain forecast ·"
+  },
+  "วัน / เวลา": {
+    "th": "วัน / เวลา",
+    "en": "Date / time"
+  },
+  "ฝน (มม.)": {
+    "th": "ฝน (มม.)",
+    "en": "Rain (mm)"
+  },
+  "โอกาสฝน": {
+    "th": "โอกาสฝน",
+    "en": "Rain probability"
+  },
+  "ช่วงเริ่ม": {
+    "th": "ช่วงเริ่ม",
+    "en": "Period starts"
+  },
+  "· เวลา": {
+    "th": "· เวลา",
+    "en": "· Time zone"
+  },
+  "ดึงข้อมูลเมื่อ": {
+    "th": "ดึงข้อมูลเมื่อ",
+    "en": "Fetched at"
+  },
+  "(เวลาไทย)": {
+    "th": "(เวลาไทย)",
+    "en": "(Thailand time)"
+  },
+  "พยากรณ์ฝนไม่ใช่การยืนยันว่าน้ำจะท่วม และโอกาสฝนไม่ใช่โอกาสน้ำท่วม": {
+    "th": "พยากรณ์ฝนไม่ใช่การยืนยันว่าน้ำจะท่วม และโอกาสฝนไม่ใช่โอกาสน้ำท่วม",
+    "en": "Rain forecasts do not confirm flooding. Rain probability is not flood probability."
+  },
+  "ข้อมูลพยากรณ์โดย Open-Meteo": {
+    "th": "ข้อมูลพยากรณ์โดย Open-Meteo",
+    "en": "Forecasts by Open-Meteo"
+  },
+  "ตรวจวัดจริง · สถานีใกล้เมืองที่เลือก": {
+    "th": "ตรวจวัดจริง · สถานีใกล้เมืองที่เลือก",
+    "en": "Observed · Stations near the selected city"
+  },
+  "ฝนสะสมย้อนหลัง 24 ชั่วโมง": {
+    "th": "ฝนสะสมย้อนหลัง 24 ชั่วโมง",
+    "en": "Observed rainfall over the past 24 hours"
+  },
+  "กำลังโหลดข้อมูลฝนตรวจวัด…": {
+    "th": "กำลังโหลดข้อมูลฝนตรวจวัด…",
+    "en": "Loading observed rainfall…"
+  },
+  "สถานีใกล้ที่สุด ·": {
+    "th": "สถานีใกล้ที่สุด ·",
+    "en": "Nearest station ·"
+  },
+  "· เกณฑ์ปริมาณฝนกรมอุตุฯ": {
+    "th": "· เกณฑ์ปริมาณฝนกรมอุตุฯ",
+    "en": "· TMD rainfall classification"
+  },
+  "· ห่างจากพิกัดเมือง": {
+    "th": "· ห่างจากพิกัดเมือง",
+    "en": "· Distance from city coordinates"
+  },
+  "ห่างจากพิกัดเมือง": {
+    "th": "ห่างจากพิกัดเมือง",
+    "en": "Distance from city coordinates"
+  },
+  "กม.": {
+    "th": "กม.",
+    "en": "km"
+  },
+  "ตรวจวัด": {
+    "th": "ตรวจวัด",
+    "en": "Observed at"
+  },
+  "หน่วยงาน": {
+    "th": "หน่วยงาน",
+    "en": "Agency"
+  },
+  "ดูสถานีใกล้เคียง (": {
+    "th": "ดูสถานีใกล้เคียง (",
+    "en": "Nearby stations ("
+  },
+  "จุด)": {
+    "th": "จุด)",
+    "en": "stations)"
+  },
+  "สถานี / ระยะห่าง": {
+    "th": "สถานี / ระยะห่าง",
+    "en": "Station / distance"
+  },
+  "ฝน 24 ชม.": {
+    "th": "ฝน 24 ชม.",
+    "en": "24-hour rain"
+  },
+  "เวลาตรวจวัด": {
+    "th": "เวลาตรวจวัด",
+    "en": "Observation time"
+  },
+  "ค่า ณ สถานี ไม่ใช่ค่าเฉลี่ยทั้งเมือง ช่วงเวลาสะสมสิ้นสุดตามเวลาตรวจวัดของแต่ละสถานี ข้อมูลเกิน 3 ชั่วโมงไม่แสดง": {
+    "th": "ค่า ณ สถานี ไม่ใช่ค่าเฉลี่ยทั้งเมือง ช่วงเวลาสะสมสิ้นสุดตามเวลาตรวจวัดของแต่ละสถานี ข้อมูลเกิน 3 ชั่วโมงไม่แสดง",
+    "en": "Station readings are not city averages. Each total ends at its station observation time. Readings older than 3 hours are excluded."
+  },
+  "เมื่อไหร่ควรระวัง?": {
+    "th": "เมื่อไหร่ควรระวัง?",
+    "en": "When should I be alert?"
+  },
+  "ตั้งแต่ 35.1 มม. จัดเป็นฝนหนัก และตั้งแต่ 90.1 มม. เป็นฝนหนักมาก ควรติดตามประกาศเตือนภัยและระดับน้ำ โดยเฉพาะพื้นที่ลุ่มและใกล้ทางน้ำ": {
+    "th": "ตั้งแต่ 35.1 มม. จัดเป็นฝนหนัก และตั้งแต่ 90.1 มม. เป็นฝนหนักมาก ควรติดตามประกาศเตือนภัยและระดับน้ำ โดยเฉพาะพื้นที่ลุ่มและใกล้ทางน้ำ",
+    "en": "35.1 mm or more is heavy rain; 90.1 mm or more is very heavy rain. Check warnings and water levels, especially in low-lying areas and near waterways."
+  },
+  "ไม่มีตัวเลขเดียวที่ยืนยันว่าจะน้ำท่วม ฝนต่ำกว่าเกณฑ์ก็เกิดน้ำท่วมได้ ขึ้นกับฝนสะสมก่อนหน้า น้ำจากต้นน้ำ และการระบายน้ำ": {
+    "th": "ไม่มีตัวเลขเดียวที่ยืนยันว่าจะน้ำท่วม ฝนต่ำกว่าเกณฑ์ก็เกิดน้ำท่วมได้ ขึ้นกับฝนสะสมก่อนหน้า น้ำจากต้นน้ำ และการระบายน้ำ",
+    "en": "No single rainfall value confirms flooding. Lower totals can still coincide with floods, depending on earlier rain, upstream water and drainage."
+  },
+  "ดูเกณฑ์ปริมาณฝน": {
+    "th": "ดูเกณฑ์ปริมาณฝน",
+    "en": "View rainfall thresholds"
+  },
+  "0.1–10.0 มม. · ฝนเล็กน้อย": {
+    "th": "0.1–10.0 มม. · ฝนเล็กน้อย",
+    "en": "0.1–10.0 mm · Light rain"
+  },
+  "10.1–35.0 มม. · ฝนปานกลาง": {
+    "th": "10.1–35.0 มม. · ฝนปานกลาง",
+    "en": "10.1–35.0 mm · Moderate rain"
+  },
+  "35.1–90.0 มม. · ฝนหนัก": {
+    "th": "35.1–90.0 มม. · ฝนหนัก",
+    "en": "35.1–90.0 mm · Heavy rain"
+  },
+  "ตั้งแต่ 90.1 มม. · ฝนหนักมาก": {
+    "th": "ตั้งแต่ 90.1 มม. · ฝนหนักมาก",
+    "en": "90.1 mm and above · Very heavy rain"
+  },
+  "เกณฑ์อากาศ · กรมอุตุฯ": {
+    "th": "เกณฑ์อากาศ · กรมอุตุฯ",
+    "en": "Weather criteria · TMD"
+  },
+  "ตรวจข้อมูลฝน · ThaiWater": {
+    "th": "ตรวจข้อมูลฝน · ThaiWater",
+    "en": "Rainfall source · ThaiWater"
+  },
+  "ตรวจวัดจริง · แม่น้ำและคลอง": {
+    "th": "ตรวจวัดจริง · แม่น้ำและคลอง",
+    "en": "Observed · Rivers and canals"
+  },
+  "ระดับน้ำใกล้เมืองที่เลือก": {
+    "th": "ระดับน้ำใกล้เมืองที่เลือก",
+    "en": "Water levels near the selected city"
+  },
+  "กำลังโหลดระดับน้ำ…": {
+    "th": "กำลังโหลดระดับน้ำ…",
+    "en": "Loading water levels…"
+  },
+  "ม.รทก.": {
+    "th": "ม.รทก.",
+    "en": "m MSL"
+  },
+  "เทียบค่าก่อนหน้าจากต้นทาง": {
+    "th": "เทียบค่าก่อนหน้าจากต้นทาง",
+    "en": "Compared with the previous source reading"
+  },
+  "· สถานะจาก ThaiWater": {
+    "th": "· สถานะจาก ThaiWater",
+    "en": "· Status from ThaiWater"
+  },
+  "กม. · ตรวจวัด": {
+    "th": "กม. · ตรวจวัด",
+    "en": "km · Observed at"
+  },
+  "ระดับน้ำ (ม.รทก.)": {
+    "th": "ระดับน้ำ (ม.รทก.)",
+    "en": "Water level (m MSL)"
+  },
+  "เปลี่ยนแปลง / เวลา": {
+    "th": "เปลี่ยนแปลง / เวลา",
+    "en": "Change / time"
+  },
+  "สีแสดงสถานะน้ำจาก ThaiWater ไม่ได้ยืนยันความปลอดภัยของพื้นที่ ม.รทก. คือเมตรเทียบระดับทะเลปานกลาง ไม่ใช่ความลึกน้ำท่วม การเปลี่ยนแปลงเทียบค่าก่อนหน้าที่ต้นทางส่งมา ซึ่งไม่ระบุช่วงห่างเวลา จึงไม่ใช่อัตราน้ำขึ้นต่อชั่วโมง": {
+    "th": "สีแสดงสถานะน้ำจาก ThaiWater ไม่ได้ยืนยันความปลอดภัยของพื้นที่ ม.รทก. คือเมตรเทียบระดับทะเลปานกลาง ไม่ใช่ความลึกน้ำท่วม การเปลี่ยนแปลงเทียบค่าก่อนหน้าที่ต้นทางส่งมา ซึ่งไม่ระบุช่วงห่างเวลา จึงไม่ใช่อัตราน้ำขึ้นต่อชั่วโมง",
+    "en": "Colours show ThaiWater station status, not area safety. m MSL means metres relative to mean sea level, not flood depth. Change compares the previous source reading; its time interval is unspecified, so this is not an hourly rate."
+  },
+  "ตรวจระดับน้ำ · ThaiWater": {
+    "th": "ตรวจระดับน้ำ · ThaiWater",
+    "en": "Water level source · ThaiWater"
+  },
+  "ประกาศทางการ · ประเทศไทย": {
+    "th": "ประกาศทางการ · ประเทศไทย",
+    "en": "Official warnings · Thailand"
+  },
+  "ประกาศเตือนภัย": {
+    "th": "ประกาศเตือนภัย",
+    "en": "Weather warnings"
+  },
+  "กำลังโหลดประกาศ…": {
+    "th": "กำลังโหลดประกาศ…",
+    "en": "Loading warnings…"
+  },
+  "เผยแพร่": {
+    "th": "เผยแพร่",
+    "en": "Published"
+  },
+  "อ่านประกาศฉบับเต็ม": {
+    "th": "อ่านประกาศฉบับเต็ม",
+    "en": "Read the full warning (Thai)"
+  },
+  "ตรวจพื้นที่และช่วงเวลาจากเนื้อหาประกาศ ข้อมูลนี้ไม่ได้กรองตามเมืองที่เลือก": {
+    "th": "ตรวจพื้นที่และช่วงเวลาจากเนื้อหาประกาศ ข้อมูลนี้ไม่ได้กรองตามเมืองที่เลือก",
+    "en": "Check affected areas and dates in the warning. These notices are not filtered by the selected city."
+  },
+  "ตรวจประกาศล่าสุดจากกรมอุตุฯ": {
+    "th": "ตรวจประกาศล่าสุดจากกรมอุตุฯ",
+    "en": "Latest warnings · TMD"
+  },
+  "ติดตามสถานการณ์จาก ปภ.": {
+    "th": "ติดตามสถานการณ์จาก ปภ.",
+    "en": "Disaster updates · DDPM"
+  },
+  "รู้ทันฝน ก่อนออกเดินทาง": {
+    "th": "รู้ทันฝน ก่อนออกเดินทาง",
+    "en": "Check the rain before you travel"
+  },
+  "พยากรณ์ตามเมืองที่เลือก · ข้อมูลถนนและเรดาร์เฉพาะกรุงเทพฯ และบริเวณโดยรอบ": {
+    "th": "พยากรณ์ตามเมืองที่เลือก · ข้อมูลถนนและเรดาร์เฉพาะกรุงเทพฯ และบริเวณโดยรอบ",
+    "en": "Forecasts follow your selected city. Road and radar data cover Bangkok and nearby areas."
+  },
+  "ภาพรวมฝนและประกาศ": {
+    "th": "ภาพรวมฝนและประกาศ",
+    "en": "Forecasts & warnings"
+  },
+  "ถนนและเรดาร์ · กทม.": {
+    "th": "ถนนและเรดาร์ · กทม.",
+    "en": "Roads & radar · Bangkok"
+  },
+  "สถานการณ์น้ำ": {
+    "th": "สถานการณ์น้ำ",
+    "en": "Rainfall & water levels"
+  },
+  "● ปกติ / ฝนไม่ถึงเกณฑ์หนัก": {
+    "th": "● ปกติ / ฝนไม่ถึงเกณฑ์หนัก",
+    "en": "● Normal / below heavy-rain threshold"
+  },
+  "● เฝ้าระวัง": {
+    "th": "● เฝ้าระวัง",
+    "en": "● Watch"
+  },
+  "● ฝนหนักมาก / น้ำท่วม / ล้นตลิ่ง": {
+    "th": "● ฝนหนักมาก / น้ำท่วม / ล้นตลิ่ง",
+    "en": "● Very heavy rain / flooding / overflow"
+  },
+  "● ไม่ทราบสถานะ": {
+    "th": "● ไม่ทราบสถานะ",
+    "en": "● Unknown"
+  },
+  "ตรวจวัดจากสถานี · กรุงเทพฯ": {
+    "th": "ตรวจวัดจากสถานี · กรุงเทพฯ",
+    "en": "Station readings · Bangkok"
+  },
+  "ระดับน้ำบนถนน": {
+    "th": "ระดับน้ำบนถนน",
+    "en": "Road water levels"
+  },
+  "กำลังโหลดสถานีตรวจวัด…": {
+    "th": "กำลังโหลดสถานีตรวจวัด…",
+    "en": "Loading station readings…"
+  },
+  "จุดรายงานน้ำท่วม": {
+    "th": "จุดรายงานน้ำท่วม",
+    "en": "stations reporting flooding"
+  },
+  "จุดข้อมูลเก่า / ขัดข้อง": {
+    "th": "จุดข้อมูลเก่า / ขัดข้อง",
+    "en": "stale / unavailable stations"
+  },
+  "จาก": {
+    "th": "จาก",
+    "en": "out of"
+  },
+  "สถานี": {
+    "th": "สถานี",
+    "en": "stations"
+  },
+  "ดูจุดตรวจวัดและเลือกเขต": {
+    "th": "ดูจุดตรวจวัดและเลือกเขต",
+    "en": "View stations and filter by district"
+  },
+  "เขต": {
+    "th": "เขต",
+    "en": "District"
+  },
+  "ทุกเขตในกรุงเทพฯ": {
+    "th": "ทุกเขตในกรุงเทพฯ",
+    "en": "All Bangkok districts"
+  },
+  "ข้อมูลที่แสดง": {
+    "th": "ข้อมูลที่แสดง",
+    "en": "Show"
+  },
+  "รายงานน้ำท่วม": {
+    "th": "รายงานน้ำท่วม",
+    "en": "Flood reports"
+  },
+  "ทุกสถานี": {
+    "th": "ทุกสถานี",
+    "en": "All stations"
+  },
+  "ข้อมูลเก่า / ขัดข้อง": {
+    "th": "ข้อมูลเก่า / ขัดข้อง",
+    "en": "Stale / unavailable"
+  },
+  "ข้อมูลสถานีวัดน้ำบนถนนกรุงเทพฯ": {
+    "th": "ข้อมูลสถานีวัดน้ำบนถนนกรุงเทพฯ",
+    "en": "Bangkok road water readings"
+  },
+  "ถนน / จุดวัด": {
+    "th": "ถนน / จุดวัด",
+    "en": "Road / station"
+  },
+  "ระดับน้ำ": {
+    "th": "ระดับน้ำ",
+    "en": "Water level"
+  },
+  "สถานะ / เวลาไทย": {
+    "th": "สถานะ / เวลาไทย",
+    "en": "Status / Thailand time"
+  },
+  "ไม่พบรายการในตัวกรองนี้ ไม่ใช่การยืนยันว่าถนนทุกสายไม่มีน้ำท่วม": {
+    "th": "ไม่พบรายการในตัวกรองนี้ ไม่ใช่การยืนยันว่าถนนทุกสายไม่มีน้ำท่วม",
+    "en": "No matching stations. This does not confirm that all roads are free of flooding."
+  },
+  "แสดง 30 จาก": {
+    "th": "แสดง 30 จาก",
+    "en": "Showing 30 of"
+  },
+  "จุด · เลือกเขตเพื่อดูจุดอื่น หรือเปิดแผนที่ทางการ": {
+    "th": "จุด · เลือกเขตเพื่อดูจุดอื่น หรือเปิดแผนที่ทางการ",
+    "en": "stations · Choose a district or open the official map for other stations."
+  },
+  "· ข้อมูลเกิน 60 นาทีถือว่าไม่ล่าสุด": {
+    "th": "· ข้อมูลเกิน 60 นาทีถือว่าไม่ล่าสุด",
+    "en": "· Readings older than 60 minutes are stale."
+  },
+  "ครอบคลุมเฉพาะจุดตรวจวัด ไม่ได้บอกว่าถนนขับผ่านได้ สถานะ “ปกติ” เป็นสถานะ ณ จุดวัดตามแหล่งข้อมูล": {
+    "th": "ครอบคลุมเฉพาะจุดตรวจวัด ไม่ได้บอกว่าถนนขับผ่านได้ สถานะ “ปกติ” เป็นสถานะ ณ จุดวัดตามแหล่งข้อมูล",
+    "en": "Readings cover monitoring points only, not road passability. “Normal” is the source status at that station."
+  },
+  "เปิดแผนที่น้ำท่วมถนน · สำนักการระบายน้ำ กทม.": {
+    "th": "เปิดแผนที่น้ำท่วมถนน · สำนักการระบายน้ำ กทม.",
+    "en": "Official road flood map · Bangkok DDS"
+  },
+  "ภาพเรดาร์ · กรุงเทพฯ และโดยรอบ": {
+    "th": "ภาพเรดาร์ · กรุงเทพฯ และโดยรอบ",
+    "en": "Radar · Bangkok and nearby areas"
+  },
+  "กลุ่มฝนจากเรดาร์หนองจอก": {
+    "th": "กลุ่มฝนจากเรดาร์หนองจอก",
+    "en": "Nong Chok rainfall radar"
+  },
+  "กำลังโหลดเรดาร์…": {
+    "th": "กำลังโหลดเรดาร์…",
+    "en": "Loading radar…"
+  },
+  "ภาพเรดาร์หนองจอก · เว็บไซต์กรมอุตุฯ": {
+    "th": "ภาพเรดาร์หนองจอก · เว็บไซต์กรมอุตุฯ",
+    "en": "Nong Chok radar · TMD website"
+  },
+  "รายงานฝนจาก กทม. ·": {
+    "th": "รายงานฝนจาก กทม. ·",
+    "en": "Bangkok rainfall bulletin (Thai) ·"
+  },
+  "ตรวจแหล่งข้อมูลเมื่อ": {
+    "th": "ตรวจแหล่งข้อมูลเมื่อ",
+    "en": "Source checked at"
+  },
+  "· เวลาในภาพอาจต่างจากเวลาที่ดึงข้อมูล": {
+    "th": "· เวลาในภาพอาจต่างจากเวลาที่ดึงข้อมูล",
+    "en": "· The image time may differ from fetch time."
+  },
+  "ดูวันเวลาและคำอธิบายสีในภาพ ภาพเรดาร์แสดงกลุ่มฝน ไม่ใช่แผนที่น้ำท่วม": {
+    "th": "ดูวันเวลาและคำอธิบายสีในภาพ ภาพเรดาร์แสดงกลุ่มฝน ไม่ใช่แผนที่น้ำท่วม",
+    "en": "Check the timestamp and colour legend in the image. Radar shows rainfall, not flooding."
+  },
+  "เปิดเรดาร์พร้อมคำอธิบายสี · กทม.": {
+    "th": "เปิดเรดาร์พร้อมคำอธิบายสี · กทม.",
+    "en": "Radar and colour legend · Bangkok DDS"
+  },
+  "ฝนล่วงหน้า · น้ำบนถนน กทม. · เรดาร์ · ประกาศทางการ": {
+    "th": "ฝนล่วงหน้า · น้ำบนถนน กทม. · เรดาร์ · ประกาศทางการ",
+    "en": "Rain forecasts · Bangkok roads · Radar · Official warnings"
+  },
+  "ฝนหนักมาก": {
+    "th": "ฝนหนักมาก",
+    "en": "Very heavy rain"
+  },
+  "ฝนหนัก": {
+    "th": "ฝนหนัก",
+    "en": "Heavy rain"
+  },
+  "ฝนปานกลาง": {
+    "th": "ฝนปานกลาง",
+    "en": "Moderate rain"
+  },
+  "ฝนเล็กน้อย": {
+    "th": "ฝนเล็กน้อย",
+    "en": "Light rain"
+  },
+  "ไม่มีฝนที่วัดได้ / น้อยกว่า 0.1 มม.": {
+    "th": "ไม่มีฝนที่วัดได้ / น้อยกว่า 0.1 มม.",
+    "en": "No measurable rain / below 0.1 mm"
+  },
+  "ไม่พบฝน": {
+    "th": "ไม่พบฝน",
+    "en": "No forecast rain"
+  },
+  "ข้อมูลไม่ครบ": {
+    "th": "ข้อมูลไม่ครบ",
+    "en": "Incomplete data"
+  },
+  "ในพยากรณ์ช่วงนี้": {
+    "th": "ในพยากรณ์ช่วงนี้",
+    "en": "In this forecast period"
+  },
+  "ไม่มีข้อมูล": {
+    "th": "ไม่มีข้อมูล",
+    "en": "No data"
+  },
+  "ไม่มีค่าเปรียบเทียบ": {
+    "th": "ไม่มีค่าเปรียบเทียบ",
+    "en": "No previous reading"
+  },
+  "เท่าเดิม": {
+    "th": "เท่าเดิม",
+    "en": "Unchanged"
+  },
+  "เพิ่ม": {
+    "th": "เพิ่ม",
+    "en": "Up"
+  },
+  "ลด": {
+    "th": "ลด",
+    "en": "Down"
+  },
+  "ซม.": {
+    "th": "ซม.",
+    "en": "cm"
+  },
+  "น้ำมาก · เฝ้าระวัง": {
+    "th": "น้ำมาก · เฝ้าระวัง",
+    "en": "High water · Watch"
+  },
+  "น้ำล้นตลิ่ง": {
+    "th": "น้ำล้นตลิ่ง",
+    "en": "Overbank flooding"
+  },
+  "น้ำปกติ": {
+    "th": "น้ำปกติ",
+    "en": "Normal water level"
+  },
+  "น้ำน้อยวิกฤติ": {
+    "th": "น้ำน้อยวิกฤติ",
+    "en": "Critically low water"
+  },
+  "น้ำน้อย": {
+    "th": "น้ำน้อย",
+    "en": "Low water"
+  },
+  "ไม่ทราบสถานะ": {
+    "th": "ไม่ทราบสถานะ",
+    "en": "Unknown status"
+  },
+  "ข้อมูลเก่า / ไม่ทราบสถานะ": {
+    "th": "ข้อมูลเก่า / ไม่ทราบสถานะ",
+    "en": "Stale / unknown status"
+  },
+  "สถานีขัดข้อง / ไม่มีข้อมูล": {
+    "th": "สถานีขัดข้อง / ไม่มีข้อมูล",
+    "en": "Unavailable station / no data"
+  },
+  "น้ำท่วมเล็กน้อย": {
+    "th": "น้ำท่วมเล็กน้อย",
+    "en": "Minor flooding"
+  },
+  "น้ำท่วม": {
+    "th": "น้ำท่วม",
+    "en": "Flooding"
+  },
+  "ปกติ": {
+    "th": "ปกติ",
+    "en": "Normal"
+  },
+  "พยากรณ์ฝนสำหรับ": {
+    "th": "พยากรณ์ฝนสำหรับ",
+    "en": "Rain forecast for"
+  },
+  "· ประกาศกรมอุตุฯ ครอบคลุมประเทศไทย": {
+    "th": "· ประกาศกรมอุตุฯ ครอบคลุมประเทศไทย",
+    "en": "· TMD warnings cover Thailand"
+  },
+  "ฝนและระดับน้ำใกล้": {
+    "th": "ฝนและระดับน้ำใกล้",
+    "en": "Rainfall and water levels near"
+  },
+  "· เฉพาะสถานีในประเทศไทย": {
+    "th": "· เฉพาะสถานีในประเทศไทย",
+    "en": "· Stations in Thailand only"
+  },
+  "ข้อมูลตรวจวัดเฉพาะกรุงเทพฯ และเรดาร์บริเวณโดยรอบ ไม่เปลี่ยนตามเมืองที่ค้นหา": {
+    "th": "ข้อมูลตรวจวัดเฉพาะกรุงเทพฯ และเรดาร์บริเวณโดยรอบ ไม่เปลี่ยนตามเมืองที่ค้นหา",
+    "en": "Bangkok station data and nearby radar coverage do not follow the searched city."
+  },
+  "ไม่ทราบเวลา": {
+    "th": "ไม่ทราบเวลา",
+    "en": "Unknown time"
+  },
+  "Refresh rain forecast": {
+    "th": "อัปเดตพยากรณ์ฝน",
+    "en": "Refresh rain forecast"
+  },
+  "Refresh Bangkok flood data": {
+    "th": "อัปเดตข้อมูลน้ำท่วม กทม.",
+    "en": "Refresh Bangkok flood data"
+  },
+  "ช่วงเวลาพยากรณ์": {
+    "th": "ช่วงเวลาพยากรณ์",
+    "en": "Forecast period"
+  },
+  "เลือกข้อมูลฝนและน้ำ": {
+    "th": "เลือกข้อมูลฝนและน้ำ",
+    "en": "Choose rainfall and water information"
+  },
+  "ภาพเรดาร์ฝนเคลื่อนไหวหนองจอกจากเว็บไซต์กรมอุตุนิยมวิทยา ตรวจวันเวลาในภาพก่อนใช้งาน": {
+    "th": "ภาพเรดาร์ฝนเคลื่อนไหวหนองจอกจากเว็บไซต์กรมอุตุนิยมวิทยา ตรวจวันเวลาในภาพก่อนใช้งาน",
+    "en": "Animated Nong Chok rainfall radar from TMD. Check the image timestamp before use."
+  },
+  "Weather App · A little clarity for your day": {
+    "en": "Weather App · A little clarity for your day",
+    "th": "แอปอากาศ · รู้ทันอากาศวันนี้"
+  },
+  "Weather App home": {
+    "en": "Weather App home",
+    "th": "หน้าแรกแอปอากาศ"
+  },
+  "Remove": {
+    "en": "Remove",
+    "th": "ลบ"
+  },
+  "from saved places": {
+    "en": "from saved places",
+    "th": "จากสถานที่ที่บันทึก"
+  },
+  "We could not find that location. Please try another city.": {
+    "en": "We could not find that location. Please try another city.",
+    "th": "ไม่พบสถานที่ ลองค้นหาเมืองอื่น"
+  },
+  "Weather data is temporarily unavailable. Please try again.": {
+    "en": "Weather data is temporarily unavailable. Please try again.",
+    "th": "ข้อมูลอากาศยังไม่พร้อม กรุณาลองใหม่"
+  },
+  "km/h": {
+    "en": "km/h",
+    "th": "กม./ชม."
+  },
+  "km": {
+    "en": "km",
+    "th": "กม."
+  },
+  "hPa": {
+    "en": "hPa",
+    "th": "เฮกโตปาสคาล"
+  },
+  "Location not found. Please try another name.": {
+    "en": "Location not found. Please try another name.",
+    "th": "ไม่พบสถานที่ กรุณาลองค้นหาชื่ออื่น"
+  },
+  "Unable to find the location. Please try again later.": {
+    "en": "Unable to find the location. Please try again later.",
+    "th": "ค้นหาสถานที่ไม่ได้ กรุณาลองใหม่ภายหลัง"
+  },
+  "Unable to load the weather. Please try again later.": {
+    "en": "Unable to load the weather. Please try again later.",
+    "th": "โหลดข้อมูลอากาศไม่ได้ กรุณาลองใหม่ภายหลัง"
+  },
+  "RAIN & FLOOD WATCH": {
+    "en": "RAIN & FLOOD WATCH",
+    "th": "ติดตามฝนและน้ำท่วม"
+  },
+  "ฝนคาดการณ์": {
+    "th": "ฝนคาดการณ์",
+    "en": "Forecast rainfall"
+  },
+  "ชั่วโมง รวม": {
+    "th": "ชั่วโมง รวม",
+    "en": "hours, total"
+  },
+  "มิลลิเมตร": {
+    "th": "มิลลิเมตร",
+    "en": "millimetres"
+  },
+  "เปอร์เซ็นต์": {
+    "th": "เปอร์เซ็นต์",
+    "en": "percent"
+  }
+}
