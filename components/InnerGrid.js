@@ -1,11 +1,11 @@
-export default function InnerGrid({ title, content, content2 }) {
+import Icon from "./Icon";
+
+export default function InnerGrid({ title, content, content2, icon, unit, note }) {
   return (
-    <div className="flex flex-row items-center justify-between w-full border-b-2 border-dotted px-6">
-      <p className="font-semibold text-lg">{title}</p>
-      <p className="font text-lg">
-        {content}
-        {content2 && ` / ${content2}`}
-      </p>
+    <div className="metric-card">
+      <div className="metric-heading"><Icon name={icon} /><span>{title}</span></div>
+      <p className="metric-value">{content ?? "—"}{content2 != null && ` / ${content2}`} <span>{unit}</span></p>
+      {note && <p className="metric-note">{note}</p>}
     </div>
   );
 }

@@ -4,8 +4,9 @@ import axios from "axios";
 async function getLatLong(location) {
   if (location.trim()) {
     const result = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=${1}&appid=${process.env.API_KEY.toString()}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(location.trim())}&limit=1&appid=${process.env.API_KEY}`
     );
+    if (!result.data.length) return null;
     const data = {
       name: result.data[0].name,
       lat: result.data[0].lat,
@@ -17,7 +18,7 @@ async function getLatLong(location) {
 
 async function getWeatherData(lat, lon) {
   const result = await axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${process.env.API_KEY.toString()}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${process.env.API_KEY}`
   );
   const data = result.data;
   const combineData = {
@@ -25,13 +26,15 @@ async function getWeatherData(lat, lon) {
     highTemp: data.main.temp_max,
     lowTemp: data.main.temp_min,
     normalTemp: data.main.temp,
+    feelsLike: data.main.feels_like,
+    updatedAt: getNormalTime(data.dt, data.timezone),
     humidity: data.main.humidity,
     pressure: data.main.pressure,
     visibility: data.visibility,
-    wind: data.wind.speed,
+    wind: Number((data.wind.speed * 3.6).toFixed(1)),
     windDirection: data.wind.deg,
-    sunrise: getNormalTime(data.sys.sunrise),
-    sunset: getNormalTime(data.sys.sunset),
+    sunrise: getNormalTime(data.sys.sunrise, data.timezone),
+    sunset: getNormalTime(data.sys.sunset, data.timezone),
     weather: data.weather[0].main,
   };
   return combineData;

@@ -1,250 +1,169 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 import InnerGrid from "../components/InnerGrid";
+import Icon from "../components/Icon";
+import FloodWatch from "../components/FloodWatch";
 
 export default function Home() {
   const [weatherData, setWeatherData] = useState({});
   const [latLong, setLatLong] = useState({});
   const [location, setLocation] = useState("");
-  const [bgImage, setBgImage] = useState({
-    img: 'bg-[url("../images/clear.jpg")]',
-    component: (
-      <a href="https://www.freepik.com/free-photo/cloud-blue-sky_1017702.htm#query=weather%20background&position=0&from_view=keyword">
-        Image by jannoon028 on Freepik
-      </a>
-    ),
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const searchId = useRef(0);
   const [favouriteCountry, setFavouriteCountry] = useState([]);
 
-  async function getLatLong(location) {
-    if (location.trim()) {
-      const data = await axios.post("/api/latlon", { data: location });
-      setLatLong(data.data);
+  async function searchWeather(location) {
+    const currentSearch = ++searchId.current;
+    setError("");
+    if (!location.trim()) {
+      setIsLoading(false);
+      setError("Please enter a city or country.");
+      return;
     }
-  }
-
-  async function getWeatherData() {
-    const result = await axios.post("/api/weather-data", latLong);
-    const data = result.data;
-    setWeatherData(data);
+    setIsLoading(true);
+    try {
+      const coordinates = await axios.post("/api/latlon", { data: location.trim() });
+      if (currentSearch !== searchId.current) return;
+      const result = await axios.post("/api/weather-data", coordinates.data);
+      if (currentSearch !== searchId.current) return;
+      setLatLong(coordinates.data);
+      setWeatherData(result.data);
+    } catch (err) {
+      if (currentSearch === searchId.current) {
+        setError(err.response?.data?.error || "Unable to load the weather. Please try again.");
+      }
+    } finally {
+      if (currentSearch === searchId.current) setIsLoading(false);
+    }
   }
 
   async function handleSearch(e) {
     e.preventDefault();
-    await getLatLong(location);
+    await searchWeather(location);
   }
 
   const putToSearch = async (country) => {
     setLocation(country);
-    await getLatLong(country);
+    await searchWeather(country);
   };
 
-  //----- Check if the location in the search box is in favourite or not?
-  const checkLocation = latLong.name?.toLowerCase() || false;
+  const checkLocation = latLong.name?.toLowerCase();
   const isFavourite = favouriteCountry.includes(checkLocation);
+  const hasWeather = Number.isFinite(weatherData.normalTemp);
+  const condition = (weatherData.weather || "Clear").toLowerCase();
+  const temperature = (value) => Number.isFinite(value) ? Math.round(value) : "—";
 
-  function addToFavourite() {
-    let favourite = [...favouriteCountry];
-
-    if (!isFavourite && favourite.length <= 13 && checkLocation) {
-      favourite = [...favourite, checkLocation];
-      setFavouriteCountry(favourite);
-      localStorage.setItem("favourite", favourite);
+  function saveFavourites(next) {
+    try {
+      localStorage.setItem("favourite", JSON.stringify(next));
+      setFavouriteCountry(next);
+    } catch {
+      setError("Your browser could not save this place. Please allow local storage and try again.");
     }
   }
 
-  function deleteFromFavourite() {
-    const favouriteAfterDeleted = favouriteCountry.filter(
-      (country) => country !== checkLocation
-    );
-    localStorage.removeItem("favourite");
-    setFavouriteCountry(favouriteAfterDeleted);
-    localStorage.setItem("favourite", favouriteAfterDeleted);
-  }
-
-  function changeBackgroundImg() {
-    const weather = weatherData.weather;
-    if (weather === "Clouds") {
-      setBgImage({
-        img: 'bg-[url("../images/cloud.jpg")]',
-      });
-    } else if (weather === "Rain") {
-      setBgImage({
-        img: 'bg-[url("../images/rain.jpg")]',
-        component: (
-          <a href="https://www.freepik.com/free-vector/dark-clouds-with-rainfall-thunder-flash-background_15244408.htm#query=weather%20background&position=10&from_view=keyword">
-            Image by starline on Freepik
-          </a>
-        ),
-      });
-    } else if (weather === "Thunderstorm") {
-      setBgImage({
-        img: 'bg-[url("../images/heavyRain.jpg")]',
-        component: (
-          <a href="https://www.freepik.com/free-vector/thunderstorm-night-urban-scene_4228067.htm#query=heavy%20rain&position=26&from_view=search&track=sph">
-            Image by brgfx on Freepik
-          </a>
-        ),
-      });
-    } else if (weather === "Clear") {
-      setBgImage({
-        img: 'bg-[url("../images/clear.jpg")]',
-        component: (
-          <a href="https://www.freepik.com/free-photo/cloud-blue-sky_1017702.htm#query=weather%20background&position=0&from_view=keyword">
-            Image by jannoon028 on Freepik
-          </a>
-        ),
-      });
-    } else if (weather === "Snow") {
-      setBgImage({
-        img: 'bg-[url("../images/snow.jpg")]',
-        component: (
-          <a href="https://www.freepik.com/free-photo/beautiful-shot-mountains-trees-covered-snow-fog_10584363.htm#query=snow%20weather&position=37&from_view=search&track=sph">
-            Image by wirestock on Freepik
-          </a>
-        ),
-      });
+  function toggleFavourite() {
+    if (isFavourite) {
+      saveFavourites(favouriteCountry.filter((name) => name !== checkLocation));
+    } else if (checkLocation && favouriteCountry.length < 14) {
+      saveFavourites([...favouriteCountry, checkLocation]);
     }
   }
 
   useEffect(() => {
-    const favourite = localStorage.getItem("favourite");
-    const temp = favourite?.split(",");
-    if (favourite) setFavouriteCountry(temp);
+    try {
+      const stored = localStorage.getItem("favourite");
+      if (!stored) return;
+      let favourites;
+      try { favourites = JSON.parse(stored); }
+      catch { favourites = stored.split(","); }
+      if (Array.isArray(favourites)) {
+        setFavouriteCountry([...new Set(favourites.filter((name) => typeof name === "string" && name.trim()).map((name) => name.trim().toLowerCase()))]);
+      }
+    } catch {
+      setError("Saved places are unavailable in this browser. You can still search for weather.");
+    }
   }, []);
 
-  useEffect(() => {
-    let timerId;
-    if (weatherData.weather) {
-      timerId = setTimeout(changeBackgroundImg, 500);
-    }
-    return () => clearTimeout(timerId);
-  }, [weatherData.weather]);
-
-  useEffect(() => {
-    let timerId;
-    if (latLong.lat) {
-      timerId = setTimeout(getWeatherData, 500);
-    }
-    return () => clearTimeout(timerId);
-  }, [latLong.lat]);
-
   return (
-    <div
-      className={`w-full h-screen App bg-cover flex flex-col justify-between ${bgImage.img} transition ease-in-out sm:h-fit sm:min-h-screen`}
-    >
+    <div className="weather-app">
       <Head>
-        <title>Weather App</title>
+        <title>{hasWeather ? `${latLong.name} · ${temperature(weatherData.normalTemp)}°C` : "Weather App · A little clarity for your day"}</title>
+        <meta name="description" content="A calmer way to check the weather. Search a city, explore current conditions, and keep your favourite places close." />
       </Head>
-      <div className="flex flex-col items-center justify-evenly h-[96%]">
-        <header className="flex flex-col items-center justify-around w-full h-1/5">
-          <h1 className="text-5xl font-bold sm:py-5">Weather App</h1>
-          <form
-            onSubmit={handleSearch}
-            className="flex justify-center w-1/3 sm:my-5 sm:w-4/5"
-          >
-            <label className="w-full mr-2">
-              <input
-                className="w-full pl-5 border rounded h-14"
-                type="text"
-                maxLength="20"
-                placeholder="Type your city or country"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-            </label>
-            <button type="submit" className="w-1/3 border rounded bg-slate-100">
-              Search
-            </button>
-          </form>
+      <a className="skip-link" href="#main">Skip to weather</a>
+      <div className="app-shell">
+        <header className="topbar">
+          <Link href="/"><a className="brand" aria-label="Weather App home"><span className="brand-icon"><Icon name="sun" /></span>weather<span className="brand-dot">.</span></a></Link>
+          <span className="topbar-note"><span className="live-dot" />A window to the world</span>
+          <span className="brand-credit">BY KLADEX</span>
         </header>
-
-        {weatherData.country && (
-          <main className="flex flex-row w-[70%] h-3/6 justify-between font-Dosis lg:flex-col lg:w-full lg:items-center lg:h-4/6 lg:justify-evenly sm:w-full">
-            <div className="w-[35%] border rounded flex flex-col items-center justify-evenly bg-slate-50 lg:w-2/5 lg:py-5 sm:w-4/5 sm:mb-3">
-              <h1 className="font-extrabold text-8xl sm:text-7xl">
-                {weatherData.normalTemp?.toFixed(0)}°
-              </h1>
-              <p className="text-3xl">{weatherData.weather}</p>
-              <h2 className="text-4xl font-semibold text-blue-700 sm:text-3xl">
-                {latLong.name}, {weatherData.country}
-              </h2>
-              {!isFavourite && checkLocation ? (
-                <button
-                  onClick={() => addToFavourite()}
-                  className="w-1/3 py-1 text-white transition ease-in-out bg-teal-500 rounded hover:bg-teal-600 sm:w-1/2 sm:mt-5 lg:mt-5"
-                >
-                  Save to favourite
-                </button>
-              ) : (
-                <button
-                  className="w-1/3 py-1 text-white transition ease-in-out bg-red-600 rounded hover:bg-red-500 sm:w-1/2 sm:mt-5 lg:mt-5"
-                  onClick={() => deleteFromFavourite()}
-                >
-                  Delete from favourite
-                </button>
-              )}
+        <main id="main">
+          <section className="page-intro" aria-labelledby="page-title">
+            <div><p className="eyebrow">EVERYDAY, EVERYWHERE</p><h1 id="page-title">Your day, at a glance<span>.</span></h1><p className="intro-copy">A little weather insight. A better start to your day.</p></div>
+            <div className="search-area">
+              <form onSubmit={handleSearch} className="search-form" role="search">
+                <Icon name="search" />
+                <label className="sr-only" htmlFor="city-search">Search a city or country</label>
+                <input id="city-search" type="search" autoComplete="off" maxLength={100} placeholder="Search a city or country" value={location} onChange={(e) => setLocation(e.target.value)} aria-describedby="search-hint" />
+                <button type="submit" className="search-button" aria-label="Search weather"><span>Search</span><Icon name="arrow" /></button>
+              </form>
+              <p id="search-hint" className="search-hint">Try “Bangkok” or “Paris, FR” for a more specific result.</p>
             </div>
-
-            <div className="grid w-3/5 grid-cols-2 gap-4 p-10 border rounded sm:grid-cols-1 grid-row-4 bg-slate-50 font-Dosis sm:p-1 sm:w-4/5 sm:py-5">
-              <InnerGrid
-                title="High/Low"
-                content={weatherData.highTemp?.toFixed(0)}
-                content2={weatherData.lowTemp?.toFixed(0)}
-              />
-              <InnerGrid title="Wind" content={`${weatherData.wind} km/hr`} />
-              <InnerGrid
-                title="Humidity"
-                content={`${weatherData.humidity} %`}
-              />
-              <InnerGrid
-                title="Wind Direction"
-                content={`${weatherData.windDirection}° deg`}
-              />
-              <InnerGrid
-                title="Pressure"
-                content={`${weatherData.pressure} hPa`}
-              />
-              <InnerGrid title="Sunrise" content={weatherData.sunrise} />
-              <InnerGrid
-                title="Visibility"
-                content={`${weatherData.visibility / 1000} Km`}
-              />
-              <InnerGrid title="Sunset" content={weatherData.sunset} />
-            </div>
-          </main>
-        )}
-
-        <div className="flex justify-center w-[85%] h-content sm:mt-4 sm:w-full">
-          <div className="flex items-center justify-center w-4/5 py-5 rounded bg-slate-50/50">
-            <div className="flex flex-wrap justify-center w-full px-10 text-lg font-semibold sm:px-5">
-              <span className="sm:mb-3">My Favourite locations :</span>
-              {!favouriteCountry.length ? (
-                <p className="ml-3">None</p>
-              ) : (
-                favouriteCountry.map((country, index) => {
-                  return (
-                    <button
-                      className="px-5 mb-5 ml-5 transition ease-in-out bg-indigo-300 border sm:mb-0 hover:-translate-y-1 hover:scale-105 rounded-xl hover:text-white hover:bg-indigo-600 sm:px-3"
-                      key={index}
-                      onClick={() => putToSearch(country)}
-                    >
-                      {country}
-                    </button>
-                  );
-                })
-              )}
-            </div>
+          </section>
+          <div className="feedback" aria-live="polite">
+            {isLoading && <p role="status" className="loading-message"><span className="spinner" />Finding the latest weather for {location}…</p>}
+            {error && <p role="alert" className="error-message"><span>{error}</span><button onClick={() => searchWeather(location)}>Try again <Icon name="refresh" /></button></p>}
           </div>
-        </div>
+          <a className="flood-jump" href="#flood-watch"><Icon name="drop" /><span>Rain & flood watch <small>ฝนล่วงหน้า · น้ำบนถนน กทม. · เรดาร์ · ประกาศทางการ</small></span><Icon name="arrow" /></a>
+          <div className="dashboard">
+            <div className="weather-column" aria-busy={isLoading}>
+              <section className={`weather-hero condition-${condition} ${!hasWeather ? "welcome-hero" : ""}`} aria-labelledby="weather-title">
+                <div className="hero-top"><span className="hero-label"><span className="live-dot" />{hasWeather ? "CURRENT WEATHER" : "A FRESH PERSPECTIVE"}</span>
+                  {hasWeather && <button className={`save-button ${isFavourite ? "is-saved" : ""}`} onClick={toggleFavourite} aria-pressed={isFavourite} disabled={!isFavourite && favouriteCountry.length >= 14} aria-label={isFavourite ? "Remove from saved places" : "Save this place"}><Icon name="star" /><span>{isFavourite ? "Saved" : favouriteCountry.length >= 14 ? "14 places saved" : "Save place"}</span></button>}
+                </div>
+                <div className="weather-art" aria-hidden="true"><div className="sun-orb" /><div className="cloud cloud-back" /><div className="cloud cloud-front" /><div className="rain-lines"><i /><i /><i /></div></div>
+                {hasWeather ? <div className="hero-content">
+                  <h2 id="weather-title" className="city-title"><Icon name="pin" />{latLong.name}<span>{weatherData.country}</span></h2>
+                  <p className="temperature">{temperature(weatherData.normalTemp)}<span>°</span><small>C</small></p>
+                  <p className="condition-label">{weatherData.weather}<span>Feels like {temperature(weatherData.feelsLike ?? weatherData.normalTemp)}°C</span></p>
+                  <div className="hero-bottom"><span>High {temperature(weatherData.highTemp)}° <span className="divider">/</span> Low {temperature(weatherData.lowTemp)}°</span><button onClick={() => searchWeather(latLong.name)} disabled={isLoading} className="refresh-button" aria-label="Refresh weather"><Icon name="refresh" />Refresh</button></div>
+                </div> : <div className="hero-content welcome-content">
+                  <h2 id="weather-title">A little clarity<br />for your day.</h2><p>From your neighbourhood to your next adventure.<br className="desktop-break" /> Find out what the sky has in store.</p>
+                  <button className="welcome-button" onClick={() => putToSearch("Bangkok")}>Explore Bangkok <Icon name="arrow" /></button>
+                  <span className="welcome-caption">Or search for any city above</span>
+                </div>}
+              </section>
+              {hasWeather ? <>
+                <div className="section-heading"><h2>The details</h2><span>{weatherData.updatedAt && !weatherData.updatedAt.includes("NaN") ? `Observed at ${weatherData.updatedAt.slice(0, 5)} · local time` : "Current conditions"}</span></div>
+                <section className="metrics-grid" aria-label="Weather details">
+                  <InnerGrid icon="wind" title="Wind speed" content={weatherData.wind} unit="km/h" />
+                  <InnerGrid icon="drop" title="Humidity" content={weatherData.humidity} unit="%" />
+                  <InnerGrid icon="eye" title="Visibility" content={weatherData.visibility != null ? Number((weatherData.visibility / 1000).toFixed(1)) : undefined} unit="km" />
+                  <InnerGrid icon="pressure" title="Pressure" content={weatherData.pressure} unit="hPa" />
+                  <InnerGrid icon="compass" title="Wind direction" content={weatherData.windDirection} unit="°" />
+                  <InnerGrid icon="thermometer" title="Current high / low" content={`${temperature(weatherData.highTemp)}°`} content2={`${temperature(weatherData.lowTemp)}°`} unit="C" />
+                </section>
+                <section className="sunlight-card" aria-label="Sunrise and sunset"><div className="sunlight-time"><Icon name="sunrise" /><div><span>Sunrise</span><strong>{weatherData.sunrise?.slice(0, 5) || "—"}</strong></div></div><div className="sunlight-arc" aria-hidden="true"><span><Icon name="sun" /></span></div><div className="sunlight-time"><div><span>Sunset</span><strong>{weatherData.sunset?.slice(0, 5) || "—"}</strong></div><Icon name="sunset" /></div><p>Times in {latLong.name}</p></section>
+              </> : <div className="getting-started"><span className="getting-started-icon"><Icon name="compass" /></span><div><h3>Anywhere you&apos;re headed.</h3><p>Search a place to see temperature, wind, humidity and more.</p></div></div>}
+            </div>
+            <aside className="places-column" aria-label="Places to explore">
+              <section className="saved-panel"><div className="section-heading"><h2>Saved places</h2><span className="count-badge">{favouriteCountry.length}</span></div>
+                {favouriteCountry.length ? <ul className="saved-list">{favouriteCountry.map((country) => <li key={country} className={country === checkLocation ? "active-place" : ""}><button className="saved-place" onClick={() => putToSearch(country)} aria-current={country === checkLocation ? "location" : undefined}><Icon name="pin" /><span>{country}</span><Icon name="arrow" /></button><button className="remove-place" onClick={() => saveFavourites(favouriteCountry.filter((name) => name !== country))} aria-label={`Remove ${country} from saved places`}><Icon name="close" /></button></li>)}</ul> : <div className="saved-empty"><span className="empty-star"><Icon name="star" /></span><h3>Your places, closer.</h3><p>Tap “Save place” after a search<br />to keep your favourites here.</p><span className="storage-note">Saved on this device</span></div>}
+                {favouriteCountry.length > 0 && <p className="storage-note">Saved on this device · up to 14 places</p>}
+              </section>
+              <section className="explore-panel"><div className="section-heading"><h2>Around the world</h2><Icon name="compass" /></div><p className="panel-description">A new city. A different sky.</p><div className="city-list">{[{name:"Bangkok",country:"Thailand",code:"BKK"},{name:"London",country:"United Kingdom",code:"LON"},{name:"Tokyo",country:"Japan",code:"TYO"},{name:"New York",country:"United States",code:"NYC"}].map((city) => <button className="explore-city" key={city.name} onClick={() => putToSearch(city.name)}><span className={`city-monogram city-${city.code.toLowerCase()}`}>{city.code}</span><span className="city-name"><strong>{city.name}</strong><span>{city.country}</span></span><Icon name="arrow" /></button>)}</div></section>
+              <div className="small-note"><Icon name="sun" /><p>A change of weather.<br />A change of perspective.</p></div>
+            </aside>
+          </div>
+          <FloodWatch coordinates={hasWeather ? latLong : null} />
+        </main>
+        <footer className="footer"><span>Made for the everyday. <strong>Designed by Kladex.</strong></span><a href="https://openweathermap.org/" target="_blank" rel="noreferrer">Weather data by OpenWeather <Icon name="arrow" /></a></footer>
       </div>
-
-      <footer className="flex flex-row-reverse justify-between px-3 text-orange-400">
-        <p>Design by Kladex</p>
-        {bgImage && bgImage.component}
-      </footer>
     </div>
   );
 }
