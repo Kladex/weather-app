@@ -279,6 +279,17 @@ test("forecast API validates coordinates and reports upstream failures", async (
   assert.equal((await call({}, "POST")).code, 405);
 });
 
+test("TMD radar remains available when Bangkok rejects the bulletin or changes its page", async () => {
+  for (const get of [async () => { throw Object.assign(new Error("Forbidden"), { response: { status: 403 } }); }, async () => ({ data: "unrecognized page" })]) {
+    const lib = load("libs/flood-data.js", { axios: { get } });
+    const radar = await lib.getRadar();
+    assert.equal(new URL(radar.imageUrl).origin, "https://weather.tmd.go.th");
+    assert.equal(new URL(radar.imageUrl).pathname, "/pic_bmancLoop.gif");
+    assert.equal(radar.bulletin, null);
+    assert.equal(radar.imageSource, "https://weather.tmd.go.th/bma_ncLoop.php");
+  }
+});
+
 test("Bangkok monitor preserves radar when road source fails", async () => {
   const handler = load("pages/api/bangkok-monitor.js", {
     "../../libs/flood-data": {

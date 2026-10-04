@@ -159,8 +159,15 @@ export function parseRadar(html) {
 
 export async function getRadar() {
   return cached("radar", async () => {
-    const response = await axios.get(RADAR_SOURCE, { timeout: 12000 });
-    return { ...parseRadar(response.data), imageUrl: `https://weather.tmd.go.th/pic_bmancLoop.gif?t=${Math.floor(Date.now() / 300000)}`, imageSource: "https://weather.tmd.go.th/bma_ncLoop.php", fetchedAt: new Date().toISOString() };
+    // The Bangkok bulletin is optional; the TMD image has an independent source.
+    let bulletin = null;
+    try {
+      const response = await axios.get(RADAR_SOURCE, { timeout: 12000 });
+      bulletin = parseRadar(response.data).bulletin;
+    } catch {
+      // Leave missing bulletin text out rather than hiding the independent image.
+    }
+    return { bulletin, source: RADAR_SOURCE, imageUrl: `https://weather.tmd.go.th/pic_bmancLoop.gif?t=${Math.floor(Date.now() / 300000)}`, imageSource: "https://weather.tmd.go.th/bma_ncLoop.php", fetchedAt: new Date().toISOString() };
   });
 }
 
