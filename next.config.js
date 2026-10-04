@@ -3,6 +3,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images: { domains: ["weather.bangkok.go.th"] },
+  images: { domains: ["weather.bangkok.go.th", "weather.tmd.go.th"] },
 };
 module.exports = nextConfig;

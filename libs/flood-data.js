@@ -6,6 +6,67 @@ export const FORECAST_SOURCE = "https://open-meteo.com/";
 const cache = new Map();
 const MAX_AGE = 60 * 60 * 1000;
 
+export function nearbyRainfall(data, lat, lon, now = Date.now()) {
+  if (!Array.isArray(data?.data)) throw new Error("Rainfall source unavailable");
+  const radians = (value) => value * Math.PI / 180;
+  const seen = new Set();
+  return data.data.flatMap((row) => {
+    const station = row.station;
+    const latitude = station?.tele_station_lat;
+    const longitude = station?.tele_station_long;
+    const date = row.rainfall_datetime;
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || Math.abs(latitude) > 90 || Math.abs(longitude) > 180 || !Number.isFinite(row.rain_24h) || row.rain_24h < 0 || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/.test(date)) return [];
+    const observedAt = date.replace(" ", "T") + "+07:00";
+    const age = now - new Date(observedAt).getTime();
+    if (!Number.isFinite(age) || age > 3 * 60 * 60 * 1000 || age < -5 * 60 * 1000) return [];
+    const a = Math.sin(radians(latitude - lat) / 2) ** 2 + Math.cos(radians(lat)) * Math.cos(radians(latitude)) * Math.sin(radians(longitude - lon) / 2) ** 2;
+    const distanceKm = 6371 * 2 * Math.asin(Math.sqrt(Math.min(1, a)));
+    if (distanceKm > 50 || !station.id || seen.has(station.id)) return [];
+    seen.add(station.id);
+    return [{ id: station.id, name: station.tele_station_name?.th || String(station.id), province: row.geocode?.province_name?.th || "", rainMm: row.rain_24h, observedAt, distanceKm: Number(distanceKm.toFixed(1)), agency: row.agency?.agency_name?.th || "ไม่ระบุหน่วยงาน" }];
+  }).sort((a, b) => a.distanceKm - b.distanceKm).slice(0, 5);
+}
+
+export async function getObservedRain(lat, lon) {
+  const data = await cached("observed-rain", async () => {
+    const response = await axios.get("https://api-v3.thaiwater.net/api/v1/thaiwater30/public/rain_24h", { timeout: 12000, maxContentLength: 10 * 1024 * 1024 });
+    if (!Array.isArray(response.data?.data)) throw new Error("Rainfall source unavailable");
+    return { ...response.data, fetchedAt: new Date().toISOString() };
+  });
+  return { stations: nearbyRainfall(data, lat, lon), fetchedAt: data.fetchedAt };
+}
+
+export function nearbyWaterLevels(data, lat, lon, now = Date.now()) {
+  if (!Array.isArray(data?.waterlevel_data?.data)) throw new Error("Water level source unavailable");
+  const number = (value) => value !== null && value !== undefined && String(value).trim() !== "" && Number.isFinite(Number(value)) ? Number(value) : null;
+  return data.waterlevel_data.data.flatMap((row) => {
+    const station = row.station;
+    const levelMsl = number(row.waterlevel_msl);
+    const previous = number(row.waterlevel_msl_previous);
+    const date = row.waterlevel_datetime;
+    const latitude = station?.tele_station_lat;
+    const longitude = station?.tele_station_long;
+    if (levelMsl === null || !station?.id || !Number.isFinite(latitude) || !Number.isFinite(longitude) || Math.abs(latitude) > 90 || Math.abs(longitude) > 180 || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/.test(date)) return [];
+    const observedAt = date.replace(" ", "T") + "+07:00";
+    const age = now - new Date(observedAt).getTime();
+    if (!Number.isFinite(age) || age > 3 * 60 * 60 * 1000 || age < -5 * 60 * 1000) return [];
+    const rad = (value) => value * Math.PI / 180;
+    const a = Math.sin(rad(latitude - lat) / 2) ** 2 + Math.cos(rad(lat)) * Math.cos(rad(latitude)) * Math.sin(rad(longitude - lon) / 2) ** 2;
+    const distanceKm = 6371 * 2 * Math.asin(Math.sqrt(Math.min(1, a)));
+    if (distanceKm > 50) return [];
+    return [{ id: station.id, name: station.tele_station_name?.th || String(station.id), province: row.geocode?.province_name?.th || "", river: row.river_name || row.basin?.basin_name?.th || "", levelMsl, status: ({ 1: "น้ำน้อยวิกฤติ", 2: "น้ำน้อย", 3: "น้ำปกติ", 4: "น้ำมาก · เฝ้าระวัง", 5: "น้ำล้นตลิ่ง" })[row.situation_level] || "ไม่ทราบสถานะ", tone: ({ 1: "watch", 2: "watch", 3: "normal", 4: "watch", 5: "danger" })[row.situation_level] || "unknown", changeCm: previous === null ? null : Number(((levelMsl - previous) * 100).toFixed(1)), observedAt, distanceKm: Number(distanceKm.toFixed(1)) }];
+  }).sort((a, b) => a.distanceKm - b.distanceKm).filter((row, index, rows) => rows.findIndex((other) => other.id === row.id) === index).slice(0, 5);
+}
+
+export async function getWaterLevels(lat, lon) {
+  const data = await cached("water-levels", async () => {
+    const response = await axios.get("https://api-v3.thaiwater.net/api/v1/thaiwater30/public/waterlevel_load", { timeout: 12000, maxContentLength: 10 * 1024 * 1024 });
+    if (!Array.isArray(response.data?.waterlevel_data?.data)) throw new Error("Water level source unavailable");
+    return { ...response.data, fetchedAt: new Date().toISOString() };
+  });
+  return { stations: nearbyWaterLevels(data, lat, lon), fetchedAt: data.fetchedAt };
+}
+
 export const WARNING_SOURCE = "https://www.tmd.go.th/warning-and-events/warning-storm";
 
 export function parseWarnings(xml) {
@@ -99,7 +160,7 @@ export function parseRadar(html) {
 export async function getRadar() {
   return cached("radar", async () => {
     const response = await axios.get(RADAR_SOURCE, { timeout: 12000 });
-    return { ...parseRadar(response.data), fetchedAt: new Date().toISOString() };
+    return { ...parseRadar(response.data), imageUrl: `https://weather.tmd.go.th/pic_bmancLoop.gif?t=${Math.floor(Date.now() / 300000)}`, imageSource: "https://weather.tmd.go.th/bma_ncLoop.php", fetchedAt: new Date().toISOString() };
   });
 }
 

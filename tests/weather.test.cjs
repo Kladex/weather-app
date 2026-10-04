@@ -24,6 +24,21 @@ function load(file, dependencies = {}) {
 
 const time = load("utils/getNormalTime.js").default;
 
+test("observations exclude stale, far, missing and future readings while preserving zero rain and negative water datum", () => {
+  const lib = load("libs/flood-data.js", { axios: {} });
+  const now = Date.parse("2026-10-04T15:00:00+07:00");
+  const row = { station: { id: 1, tele_station_lat: 13.75, tele_station_long: 100.5 }, rain_24h: 0, rainfall_datetime: "2026-10-04 14:00" };
+  const result = lib.nearbyRainfall({ data: [row, { ...row, station: { ...row.station, id: 2, tele_station_lat: 20 } }, { ...row, rainfall_datetime: "2026-10-03 14:00" }, { ...row, rainfall_datetime: "2026-10-04 16:00" }, { ...row, rain_24h: null }] }, 13.75, 100.5, now);
+  assert.equal(result.length, 1);
+  assert.equal(result[0].rainMm, 0);
+  const water = lib.nearbyWaterLevels({ waterlevel_data: { data: [{ ...row, waterlevel_datetime: row.rainfall_datetime, waterlevel_msl: "-0.5", waterlevel_msl_previous: "-0.6" }, { ...row, waterlevel_datetime: row.rainfall_datetime, waterlevel_msl: "" }] } }, 13.75, 100.5, now);
+  assert.equal(water.length, 1);
+  assert.equal(water[0].levelMsl, -0.5);
+  assert.equal(water[0].changeCm, 10);
+  assert.throws(() => lib.nearbyRainfall({}, 0, 0));
+  assert.throws(() => lib.nearbyWaterLevels({}, 0, 0));
+});
+
 test("warnings decode Thai XML, retain full text and reject blank responses", () => {
   const { parseWarnings } = load("libs/flood-data.js", { axios: {} });
   const result = parseWarnings('<WeatherForecastDaily><Warnings/><Warning><IssueNo>6</IssueNo><TitleThai>&#xE1D;&#xE19;</TitleThai><DescriptionThai>heavy rain &amp; floods</DescriptionThai><AnnounceDate>2026-10-04 05:46:07</AnnounceDate></Warning></WeatherForecastDaily>');
