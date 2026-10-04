@@ -279,26 +279,18 @@ test("forecast API validates coordinates and reports upstream failures", async (
   assert.equal((await call({}, "POST")).code, 405);
 });
 
-test("collector fallback preserves observation timestamps and rejects old snapshots", async () => {
-  const now = Date.now();
-  const snapshot = { fetchedAt: new Date(now).toISOString(), dtTbl: [{ flood_code: "FL.TEST.01", flood: 20, site_timestamp: `/Date(${now})/`, status: 1, chkStatustxt: "น้ำท่วม" }] };
-  for (const stale of [false, true]) {
-    const calls = [];
-    const lib = load("libs/flood-data.js", { axios: { get: async (url, options) => {
-      calls.push({ url, options });
-      if (calls.length === 1) throw Object.assign(new Error("Forbidden"), { response: { status: 403 } });
-      return { data: { ...snapshot, fetchedAt: new Date(now - (stale ? 360000 : 0)).toISOString() } };
-    } } }, { BANGKOK_COLLECTOR_URL: "https://collector.example/roads", BANGKOK_COLLECTOR_TOKEN: "test-secret" });
-    if (stale) await assert.rejects(lib.getRoads(), /snapshot unavailable/);
-    else {
-      const roads = await lib.getRoads();
-      assert.equal(roads.stations[0].observedAt, new Date(now).toISOString());
-      assert.equal(roads.stations[0].flooded, true);
-      assert.equal(roads.fetchedAt, snapshot.fetchedAt);
-    }
-    assert.equal(calls[1].options.headers.Authorization, "Bearer test-secret");
-    assert.equal(calls[1].options.maxRedirects, 0);
-  }
+test("POPNIX roads reject stale, missing, faulty and future readings and preserve lower bounds", () => {
+  const {normalizePopnixRoads}=load("libs/flood-data.js", {axios:{}});
+  const now=Date.parse("2026-10-04T17:30:00+07:00");
+  const row={code:"A",depth:20,grp:2,level:"flood",measured_at:"2026-10-04 17:30:00"};
+  const rows=[row,{...row,code:"B",depth:null},{...row,code:"C",level:"off"},{...row,code:"D",measured_at:"2026-10-04 15:00:00"},{...row,code:"E",measured_at:"2026-10-04 19:00:00"},{...row,code:"F",depth:0,level:"dry"}];
+  const result=normalizePopnixRoads({summary:{stale:false},roads:rows},now);
+  assert.equal(result.filter(r=>r.flooded).length,1);
+  assert.equal(result[0].depthLowerBound,true);
+  assert.equal(result[5].depthCm,0);
+  assert.equal(result[5].available,true);
+  assert.equal(normalizePopnixRoads({summary:{stale:true},roads:[row]},now)[0].available,false);
+  assert.throws(()=>normalizePopnixRoads({}));
 });
 
 test("collector requires authentication, shares concurrent fetches and returns safe failures", async () => {

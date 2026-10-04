@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const ROAD_SOURCE = "https://weather.bangkok.go.th/floodbangkok/";
+export const ROAD_SOURCE = "https://flood.pop.in.th/";
 export const RADAR_SOURCE = "https://weather.bangkok.go.th/Radar/RadarAnimation.aspx";
 export const FORECAST_SOURCE = "https://open-meteo.com/";
 const cache = new Map();
@@ -134,22 +134,28 @@ export function normalizeRoads(data, now = Date.now()) {
   });
 }
 
+export function normalizePopnixRoads(data, now = Date.now()) {
+  if (!Array.isArray(data?.roads) || !data.roads.length || typeof data.summary?.stale !== "boolean") throw new Error("Road source format unavailable");
+  const seen = new Set();
+  const statuses = { dry: "ปกติ", slight: "น้ำท่วมเล็กน้อย", flood: "น้ำท่วม", off: "ขัดข้อง" };
+  return data.roads.filter(row => {
+    if (typeof row.code !== "string" || !row.code || seen.has(row.code)) return false;
+    seen.add(row.code);
+    return true;
+  }).map(row => {
+    const observedAt = typeof row.measured_at === "string" && /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(row.measured_at) ? row.measured_at.replace(" ", "T") + "+07:00" : null;
+    const age = now - Date.parse(observedAt);
+    const stale = data.summary.stale || !Number.isFinite(age) || age > MAX_AGE || age < -5 * 60 * 1000;
+    const depthCm = Number.isFinite(row.depth) && row.depth >= 0 ? row.depth : null;
+    const available = !stale && depthCm !== null && !row.msg_fail && ["dry", "slight", "flood"].includes(row.level);
+    return { code: row.code, road: row.road || row.name || row.code, station: row.name || row.code, district: row.district || "ไม่ระบุเขต", depthCm, observedAt, status: statuses[row.level] || "ไม่ทราบสถานะ", available, stale, flooded: available && ["slight", "flood"].includes(row.level), depthLowerBound: row.grp === 2 && depthCm === 20, url: `https://floodbangkok.bangkok.go.th/device-info?sensor_profile_id=${encodeURIComponent(row.code)}` };
+  });
+}
+
 export async function getRoads() {
   return cached("roads", async () => {
-    try {
-      const response = await axios.get(`${ROAD_SOURCE}PageMap/GetData?id=0`, { timeout: 12000 });
-      return { stations: normalizeRoads(response.data), fetchedAt: new Date().toISOString(), source: ROAD_SOURCE };
-    } catch (error) {
-      const url = process.env.BANGKOK_COLLECTOR_URL;
-      const token = process.env.BANGKOK_COLLECTOR_TOKEN;
-      if (!url || !token) throw error;
-      const target = new URL(url);
-      if (target.protocol !== "https:" || target.username || target.password) throw new Error("Invalid collector URL");
-      const response = await axios.get(target.href, { timeout: 15000, maxContentLength: 5 * 1024 * 1024, maxRedirects: 0, headers: { Authorization: `Bearer ${token}` } });
-      const age = Date.now() - Date.parse(response.data?.fetchedAt);
-      if (!Number.isFinite(age) || age > 5 * 60 * 1000 || age < -5 * 60 * 1000) throw new Error("Collector snapshot unavailable");
-      return { stations: normalizeRoads(response.data), fetchedAt: response.data.fetchedAt, source: ROAD_SOURCE };
-    }
+    const response = await axios.get(`${ROAD_SOURCE}api_roads.php`, { timeout: 12000, maxContentLength: 5 * 1024 * 1024 });
+    return { stations: normalizePopnixRoads(response.data), fetchedAt: new Date().toISOString(), source: ROAD_SOURCE };
   });
 }
 
